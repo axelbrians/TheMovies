@@ -77,7 +77,7 @@ val LocalAppType = staticCompositionLocalOf {
 }
 
 @Composable
-fun AppTheme(
+fun AppThemeScaffold(
     isDarkMode: Boolean = isSystemInDarkTheme(),
     customProviders: Array<ProvidedValue<*>> = arrayOf(),
     content: @Composable () -> Unit

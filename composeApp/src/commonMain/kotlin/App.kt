@@ -1,9 +1,12 @@
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,32 +15,59 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import theme.AppTheme
+import theme.AppThemeScaffold
 
 import themovies.composeapp.generated.resources.Res
 import themovies.composeapp.generated.resources.compose_multiplatform
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
 fun App() {
-    AppTheme(isDarkMode = true) {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+    val isInDarkMode = remember { mutableStateOf(true) }
+
+    AppThemeScaffold(isDarkMode = isInDarkMode.value) {
+        val showContent = remember { mutableStateOf(false) }
+        Scaffold(
+            backgroundColor = AppTheme.backgroundTheme.color,
+            contentColor = AppTheme.colors.textPrimary
         ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+            Button(onClick = { isInDarkMode.value = !isInDarkMode.value}) {
+                Text(text = "App Theme")
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
+            HomeScreen(
+                showContent = showContent,
+                onClick = { showContent.value = !showContent.value },
+                modifier = Modifier.padding(it)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun HomeScreen(
+    showContent: State<Boolean>,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = onClick) {
+            Text("Click me!")
+        }
+        AnimatedVisibility(showContent.value) {
+            val greeting = remember { Greeting().greet() }
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painterResource(resource = Res.drawable.compose_multiplatform),
+                    null
+                )
+                Text("Compose: $greeting")
             }
         }
     }
