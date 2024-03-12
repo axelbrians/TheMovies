@@ -65,6 +65,8 @@ data class AppColor(
             get() = Yellow
         override val gray: ColorShade
             get() = Gray
+        override val neutral: Neutral
+            get() = Neutral
     }
 }
 
@@ -236,6 +238,11 @@ internal data object Gray: ColorShade {
 
 }
 
+data object Neutral {
+    val white: Color = Color.White
+    val black: Color = Color.Black
+}
+
 sealed interface ColorShade {
     val A70: Color
     val A60: Color
@@ -256,6 +263,7 @@ internal interface OtherColor {
     val pink: ColorShade
     val yellow: ColorShade
     val gray: ColorShade
+    val neutral: Neutral
 }
 
 sealed interface OverlayColor {
