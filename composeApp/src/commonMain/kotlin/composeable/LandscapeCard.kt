@@ -63,7 +63,10 @@ object CardLandscapeHorizontalDefaults {
 private fun Preview_LandscapeCard() {
     CardLandscapeHorizontal(
         belowContent = {
-            ContentTitleSubtitle("Mixed Doubles: Tan Kian - Ki Juan vs Dan Corigo - Jorge Poshita", "SPOTV")
+            ContentTitleSubtitle(
+                title = "Mixed Doubles: Tan Kian - Ki Juan vs Dan Corigo - Jorge Poshita",
+                subtitle = "SPOTV"
+            )
         }
     )
 }
